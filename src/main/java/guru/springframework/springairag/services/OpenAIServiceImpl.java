@@ -3,6 +3,7 @@ package guru.springframework.springairag.services;
 import guru.springframework.springairag.model.Answer;
 import guru.springframework.springairag.model.Question;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
@@ -20,6 +21,7 @@ import java.util.Map;
 /**
  * Created by Pierrot, on 27-02-2025.
  */
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class OpenAIServiceImpl implements OpenAIService {
@@ -34,11 +36,13 @@ public class OpenAIServiceImpl implements OpenAIService {
     @Override
     public Answer getAnswer(Question question) {
         List<Document> documents = simpleVectorStore.similaritySearch(SearchRequest.builder()
-                .query(question.question()).topK(5).build());
+                .query(question.question()).topK(15).build());
 
         assert documents != null;
 
         List<String> documentContentList = documents.stream().map(Document::getText).toList();
+
+        documentContentList.forEach(content -> log.info("Document: {}", content));
 
         PromptTemplate promptTemplate = new PromptTemplate(ragPromptTemplate);
         Prompt prompt = promptTemplate.create(Map.of("input", question.question(),
