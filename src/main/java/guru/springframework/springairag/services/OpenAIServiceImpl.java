@@ -28,13 +28,13 @@ public class OpenAIServiceImpl implements OpenAIService {
 
     private final SimpleVectorStore simpleVectorStore;
 
-    @Value("classpath:template/rag-prompt-template.st")
+    @Value("classpath:templates/rag-prompt-template.st")
     private Resource ragPromptTemplate;
 
     @Override
     public Answer getAnswer(Question question) {
         List<Document> documents = simpleVectorStore.similaritySearch(SearchRequest.builder()
-                .query(question.question()).topK(4).build());
+                .query(question.question()).topK(5).build());
 
         assert documents != null;
 
