@@ -3,6 +3,8 @@ package guru.springframework.springairag.config;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.document.Document;
 import org.springframework.ai.embedding.EmbeddingModel;
+import org.springframework.ai.openai.OpenAiEmbeddingOptions;
+import org.springframework.ai.openai.api.OpenAiApi;
 import org.springframework.ai.reader.tika.TikaDocumentReader;
 import org.springframework.ai.transformer.splitter.TextSplitter;
 import org.springframework.ai.transformer.splitter.TokenTextSplitter;
@@ -22,6 +24,7 @@ public class VectorStoreConfig {
 
     @Bean
     public SimpleVectorStore simpleVectorStore(EmbeddingModel embeddingModel, VectorStoreProperties vectorStoreProperties) {
+        log.info("### the default embedding model is: {} ###", OpenAiApi.DEFAULT_EMBEDDING_MODEL);
         SimpleVectorStore simpleVectorStore = SimpleVectorStore.builder(embeddingModel).build();
 
         File vectorStoreFile = new File(vectorStoreProperties.getVectorStorePath());
