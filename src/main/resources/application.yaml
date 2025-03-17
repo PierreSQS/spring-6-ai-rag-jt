@@ -1,7 +1,13 @@
 spring:
   application:
     name: spring-ai-rag
-#Pass API key as environment variable, e.g. -DOPENAI_API_KEY=your-api-key
+
+  # enable colour output for the console
+  output:
+    ansi:
+      enabled: always
+
+  #Pass API key as environment variable, e.g. -DOPENAI_API_KEY=your-api-key
   ai:
     openai:
       api-key: ${OPENAI_API_KEY}
