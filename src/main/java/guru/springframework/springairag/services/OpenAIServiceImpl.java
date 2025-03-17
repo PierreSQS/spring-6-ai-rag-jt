@@ -3,6 +3,7 @@ package guru.springframework.springairag.services;
 import guru.springframework.springairag.model.Answer;
 import guru.springframework.springairag.model.Question;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
@@ -18,8 +19,9 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by jt, Spring Framework Guru.
+ * Modified by Pierrot, on 17-03-2025.
  */
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class OpenAIServiceImpl implements OpenAIService {
@@ -35,16 +37,18 @@ public class OpenAIServiceImpl implements OpenAIService {
 
         List<Document> documents = vectorStore.similaritySearch(SearchRequest.builder()
                 .query(question.question()).topK(5).build());
-        List<String> contentList = documents.stream().map(Document::getContent).toList();
+
+        assert documents != null;
+        List<String> contentList = documents.stream().map(Document::getText).toList();
 
         PromptTemplate promptTemplate = new PromptTemplate(ragPromptTemplate);
         Prompt prompt = promptTemplate.create(Map.of("input", question.question(), "documents",
                 String.join("\n", contentList)));
 
-        contentList.forEach(System.out::println);
+        contentList.forEach(log::info);
 
         ChatResponse response = chatModel.call(prompt);
 
-        return new Answer(response.getResult().getOutput().getContent());
+        return new Answer(response.getResult().getOutput().getText());
     }
 }
