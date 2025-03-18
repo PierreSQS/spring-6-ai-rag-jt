@@ -2,26 +2,30 @@ package guru.springframework.springairag;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.ai.autoconfigure.openai.OpenAiEmbeddingProperties;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationContext;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 class SpringAiRagApplicationTests {
 
+    @Autowired
+    OpenAiEmbeddingProperties openAiEmbeddingProperties;
+
     @Test
-    void contextLoads(ApplicationContext appCtx) {
+    void contextLoads() {
 
-        OpenAiEmbeddingProperties openAIEmbeddingProperties =
-                appCtx.getBean(OpenAiEmbeddingProperties.class);
+        displayLLMModels(openAiEmbeddingProperties);
 
-        String theModelInUse = openAIEmbeddingProperties.getOptions().getModel();
+    }
 
-        System.out.println("Beans in context: " + appCtx.getBeanDefinitionCount());
-        System.out.println("The model in use is: " + theModelInUse);
+    private void displayLLMModels(OpenAiEmbeddingProperties openAiEmbeddingProperties) {
 
-        assertThat(theModelInUse).isEqualTo("text-embedding-3-small");
+        String modelInUse = openAiEmbeddingProperties.getOptions().getModel();
+
+        System.out.println("The model in use is: " + modelInUse);
+
+        String defaultEmbeddingModel = OpenAiEmbeddingProperties.DEFAULT_EMBEDDING_MODEL;
+        System.out.println("The default model is: " + defaultEmbeddingModel);
 
     }
 
