@@ -10,7 +10,7 @@ import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.stereotype.Service;
 
 /**
- * Created by Pierrot, on 27-02-2025.
+ * Created by Pierrot, on 04-11-2025.
  */
 @RequiredArgsConstructor
 @Service
@@ -24,6 +24,6 @@ public class OpenAIServiceImpl implements OpenAIService {
         Prompt prompt = promptTemplate.create();
         ChatResponse response = chatModel.call(prompt);
 
-        return new Answer(response.getResult().getOutput().getContent());
+        return new Answer(response.getResult().getOutput().getText());
     }
 }
