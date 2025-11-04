@@ -10,7 +10,7 @@ import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.stereotype.Service;
 
 /**
- * Created by Pierrot, on 04-11-2025.
+ * Modified by Pierrot, on 04-11-2025.
  */
 @RequiredArgsConstructor
 @Service
