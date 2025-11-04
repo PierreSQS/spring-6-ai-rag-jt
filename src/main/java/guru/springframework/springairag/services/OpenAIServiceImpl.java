@@ -3,7 +3,7 @@ package guru.springframework.springairag.services;
 import guru.springframework.springairag.model.Answer;
 import guru.springframework.springairag.model.Question;
 import lombok.RequiredArgsConstructor;
-import org.springframework.ai.chat.model.ChatModel;
+import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.chat.prompt.PromptTemplate;
@@ -16,14 +16,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class OpenAIServiceImpl implements OpenAIService {
 
-    private final ChatModel chatModel;
+    private final ChatClient chatClient;
 
     @Override
     public Answer getAnswer(Question question) {
         PromptTemplate promptTemplate = new PromptTemplate(question.question());
         Prompt prompt = promptTemplate.create();
-        ChatResponse response = chatModel.call(prompt);
+        ChatResponse response = chatClient.prompt(prompt).call().chatResponse();
 
+        assert response != null;
         return new Answer(response.getResult().getOutput().getText());
     }
 }
