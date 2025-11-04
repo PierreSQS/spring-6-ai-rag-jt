@@ -12,6 +12,18 @@ spring:
   ai:
     openai:
       api-key: ${OPENAI_API_KEY}
+
+# enable Advisor logging
+logging:
+  level:
+    org:
+      springframework:
+        ai:
+          chat:
+            client:
+              advisor: DEBUG
+
+# application.properties
 sfg:
   aiapp:
     vectorStorePath: /tmp/vectorstore.json

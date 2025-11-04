@@ -3,6 +3,7 @@ package guru.springframework.springairag.services;
 import guru.springframework.springairag.model.Answer;
 import guru.springframework.springairag.model.Question;
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
 import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.chat.prompt.PromptTemplate;
@@ -17,7 +18,7 @@ public class OpenAIServiceImpl implements OpenAIService {
     private final ChatClient chatClient;
 
     public OpenAIServiceImpl(ChatClient.Builder chatClientBuilder) {
-        this.chatClient = chatClientBuilder.build();
+        this.chatClient = chatClientBuilder.defaultAdvisors(new SimpleLoggerAdvisor()).build();
     }
 
     @Override
