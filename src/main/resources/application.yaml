@@ -7,6 +7,12 @@ spring:
       api-key: ${OPENAI_API_KEY}
 sfg:
   aiapp:
-    vectorStorePath: /tmp/vectorstore.json
+    vectorStorePath: /tmp/vectorstore.json # will store under C:\tmp\vectorstore.json on Windows
     documentsToLoad:
       - classpath:/movies500.csv
+
+# enable debug logging for the config and Spring AI chat client advisor
+logging:
+  level:
+    guru.springframework.springairag.config: DEBUG
+    org.springframework.ai.chat.client.advisor: DEBUG
