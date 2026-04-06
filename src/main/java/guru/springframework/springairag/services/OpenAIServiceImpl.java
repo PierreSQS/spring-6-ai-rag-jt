@@ -4,7 +4,6 @@ import guru.springframework.springairag.model.Answer;
 import guru.springframework.springairag.model.Question;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
-import org.springframework.ai.chat.model.ChatResponse;
 import org.springframework.ai.chat.prompt.Prompt;
 import org.springframework.ai.chat.prompt.PromptTemplate;
 import org.springframework.stereotype.Service;
@@ -53,12 +52,11 @@ public class OpenAIServiceImpl implements OpenAIService {
         PromptTemplate promptTemplate = new PromptTemplate(question.question());
         Prompt prompt = promptTemplate.create();
 
-        // Call the model and extract the response
-        ChatResponse response = chatClient.prompt(prompt).call().chatResponse();
-
-        assert response != null;
-
-        // Pull the generated text from the first choice and return it as an Answer record
-        return new Answer(response.getResult().getOutput().getText());
+        // Send the prompt to the LLM, then let Spring AI deserialize the response text
+        // directly into an Answer record via .entity() — no manual ChatResponse parsing needed
+        return chatClient
+                .prompt(prompt)
+                .call()
+                .entity(Answer.class); // Spring AI maps the model output JSON to Answer(String answer)
     }
 }
