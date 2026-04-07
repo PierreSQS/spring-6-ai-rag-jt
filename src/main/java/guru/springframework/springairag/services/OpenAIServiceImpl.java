@@ -43,10 +43,13 @@ public class OpenAIServiceImpl implements OpenAIService {
     // We query it at request time to find chunks semantically similar to the user's question.
     private final VectorStore vectorStore;
 
-    // The StringTemplate (.st) resource that defines the RAG prompt structure.
-    // It contains two placeholders: {input} for the user question and {documents}
-    // for the retrieved context chunks.
-    private final Resource ragPromptTemplateResource;
+    /**
+     * The StringTemplate (.st) resource that defines the RAG prompt structure.
+     * It contains two placeholders: {input} for the user question and {documents}
+     * for the retrieved context chunks.
+     */
+    @Value("classpath:/templates/rag-prompt-template.st")
+    private Resource ragPromptTemplateResource;
 
     /**
      * Constructs the service using Spring AI's autoconfigured {@link ChatClient.Builder},
@@ -54,17 +57,12 @@ public class OpenAIServiceImpl implements OpenAIService {
      *
      * @param chatClientBuilder        autoconfigured builder provided by Spring AI
      * @param vectorStore              in-memory vector store loaded with document embeddings at startup
-     * @param ragPromptTemplateResource the StringTemplate file that defines the RAG prompt structure
      */
-    public OpenAIServiceImpl(ChatClient.Builder chatClientBuilder,
-                             VectorStore vectorStore,
-                             @Value("classpath:/templates/rag-prompt-template.st")
-                             Resource ragPromptTemplateResource) {
+    public OpenAIServiceImpl(ChatClient.Builder chatClientBuilder, VectorStore vectorStore) {
         this.chatClient = chatClientBuilder
                 .defaultAdvisors(new SimpleLoggerAdvisor()) // log every prompt & response at DEBUG
                 .build();
         this.vectorStore = vectorStore;
-        this.ragPromptTemplateResource = ragPromptTemplateResource;
     }
 
     /**
