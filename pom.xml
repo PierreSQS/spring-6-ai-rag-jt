@@ -37,6 +37,11 @@
             <groupId>org.springframework.ai</groupId>
             <artifactId>spring-ai-vector-store</artifactId>
         </dependency>
+        <!-- RetrievalAugmentationAdvisor and VectorStoreDocumentRetriever -->
+        <dependency>
+            <groupId>org.springframework.ai</groupId>
+            <artifactId>spring-ai-rag</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
