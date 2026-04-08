@@ -3,10 +3,10 @@ Use the information from the DOCUMENTS section to provide accurate answers. If u
 isn't found in the DOCUMENTS section, simply state that you don't know the answer.
 
 QUESTION:
-{input}
+{query}
 
 The documents are in a tabular dataset containing the columns. Please convert the following columns into a more readable format when providing answers:
 title (title of movie),budget (USD, format as $0,000),revenue (USD, format as $0,000),runtime (in minutes - display as hours and minutes),credits (cast or actors)
 
 DOCUMENTS:
-{documents}
+{context}
