@@ -10,6 +10,9 @@ spring:
         options:
             model: gpt-5.4-nano
             #temperature: 0.7
+      embedding:
+        options:
+          model: text-embedding-3-small
 sfg:
   aiapp:
     vectorStorePath: /tmp/vectorstore.json # will store under C:\tmp\vectorstore.json on Windows
