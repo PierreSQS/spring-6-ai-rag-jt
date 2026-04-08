@@ -1,6 +1,7 @@
 spring:
-  application:
-    name: spring-ai-rag-jt
+  # enable color output in the console
+  output.ansi.enabled: ALWAYS
+  application.name: spring-ai-rag-jt
 #Pass API key as environment variable, e.g. -DOPENAI_API_KEY=your-api-key
   ai:
     openai:
